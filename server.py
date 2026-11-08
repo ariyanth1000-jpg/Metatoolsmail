@@ -5,9 +5,8 @@ import ssl
 import json
 import re
 import concurrent.futures
-import os # Render-এর পোর্ট নেওয়ার জন্য
+import os
 
-# Render এর জন্য পোর্ট ডাইনামিক করা হলো
 PORT = int(os.environ.get("PORT", 9999)) 
 MAILPIT_URL = "http://mail.tplink.info"
 
@@ -21,34 +20,56 @@ def extract_code_for_msg(msg_id):
             text = msg_data.get('Text', '')
             html = msg_data.get('HTML', '')
             
+            # HTML ট্যাগ মুছে ফেলা
             clean_html = re.sub(r'<[^>]+>', ' ', html)
             combined = f"{subject} \n {text} \n {clean_html}"
+            
+            # এক্সট্রা স্পেস এবং নতুন লাইন মুছে ফেলা
             combined = re.sub(r'\s+', ' ', combined)
             
+            # নাম্বারের মাঝখানে স্পেস থাকলে তা মুছে ফেলা (যেমন: 2769 1303 -> 27691303)
+            combined = re.sub(r'(?<=\d)\s+(?=\d)', '', combined)
+
+            # ১. "Confirmation code" বা "Use code" এর ঠিক পরের কোডটি খোঁজা (সবচেয়ে নির্ভুল)
+            match = re.search(r'(?:Confirmation code|Use code|Login code|Verification code)[^\d]{0,15}?(\d{4,8})', combined, re.IGNORECASE)
+            if match: 
+                return match.group(1)
+
+            # ২. ইনস্টাগ্রামের স্টাইল: "27691303 is your Instagram confirmation code"
+            match = re.search(r'\b(\d{6,8})\b is your', combined, re.IGNORECASE)
+            if match: 
+                return match.group(1)
+
+            # ৩. সাধারণ 'code' বা 'otp' শব্দের পরের কোড (যেখানে অন্তত ১টি নাম্বার থাকতে হবে)
+            for match in re.finditer(r'(?:code|otp|pin|verification|passcode|login)[^\w]*((?=[A-Z0-9]*\d)[A-Z0-9]{4,8})', combined, re.IGNORECASE):
+                code = match.group(1).upper()
+                if code not in ['2023', '2024', '2025', '2026', '94025', '12345']:
+                    return code
+
+            # ৪. ৮ ডিজিটের কোড (মেটা পাসওয়ার্ড রিসেট)
+            matches = re.findall(r'\b\d{8}\b', combined)
+            for m in matches:
+                if m not in ['20231012', '20231112', '94025']: 
+                    return m
+
+            # ৫. ৬ ডিজিটের কোড (মেটা লগইন)
             matches = re.findall(r'\b\d{6}\b', combined)
             for m in matches:
-                if m not in ['2023', '2024', '2025', '2026']: return m
-
+                if m not in ['202310', '202311', '202312', '94025']: 
+                    return m
+                    
+            # ৬. ৫ ডিজিটের কোড (94025 strictly বাদ দেওয়া হলো)
             matches = re.findall(r'\b\d{5}\b', combined)
             for m in matches:
-                if m not in ['12345']: return m
-                
+                if m not in ['12345', '94025']: 
+                    return m
+
+            # ৭. ৪ ডিজিটের কোড
             matches = re.findall(r'\b\d{4}\b', combined)
             for m in matches:
-                if m not in ['2023', '2024', '2025', '2026', '1234']: return m
-                    
-            matches = re.findall(r'\b\d{3}\s\d{3}\b', combined)
-            if matches:
-                return matches[0].replace(' ', '')
-                    
-            match = re.search(r'(?:code|otp|pin|verification|passcode|password|login)[^\w]*([a-zA-Z0-9]{4,8})', combined, re.IGNORECASE)
-            if match: 
-                return match.group(1).upper()
-                
-            matches = re.findall(r'\b(?=[A-Z0-9]*\d)[A-Z0-9]{4,8}\b', combined)
-            for m in matches:
-                if m not in ['2023', '2024', '2025', '2026']:
+                if m not in ['2023', '2024', '2025', '2026', '94025']: 
                     return m
+                    
     except Exception as e:
         pass
     return None
@@ -132,7 +153,6 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(f'{{"error": "{str(e)}"}}'.encode())
 
 if __name__ == "__main__":
-    # Render এর জন্য 0.0.0.0 হোস্ট করা জরুরি
     with http.server.ThreadingHTTPServer(("0.0.0.0", PORT), MyHandler) as httpd:
         print(f"✅ সার্ভার চালু হয়েছে! পোর্ট: {PORT}")
         httpd.serve_forever()
