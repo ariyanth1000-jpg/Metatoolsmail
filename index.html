@@ -6,7 +6,6 @@
   <title>TAMIM Mailbox</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* CSS Variables for Light/Dark Mode */
     :root {
       --bg-color: #eef2f6;
       --card-bg: #ffffff;
@@ -45,35 +44,17 @@
     body { background: var(--bg-color); margin: 0; padding: 15px; color: var(--text-main); transition: background 0.3s, color 0.3s; overflow-x: hidden; }
     .container { max-width: 1000px; margin: auto; }
     
-    /* Premium Header */
     .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
     .header-title { color: var(--text-main); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
     .vip-tag { font-size: 11px; background: linear-gradient(135deg, #ef4444, #b91c1c); color: white; padding: 3px 8px; border-radius: 6px; font-weight: 600; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3); user-select: none; cursor: pointer; transition: 0.2s; }
     .vip-tag:active { transform: scale(0.95); }
     
-    /* Header Actions (Right Side) */
     .header-actions { display: flex; align-items: center; gap: 10px; }
-    .unlocked-actions { display: none; align-items: center; gap: 8px; }
     
-    /* Circle Buttons */
-    .btn-circle { width: 36px; height: 36px; border-radius: 50%; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s ease; font-weight: bold; }
-    
-    .btn-circle-private { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .btn-circle-private:hover { transform: scale(1.1); background: var(--hover-bg); }
-
-    .btn-circle-meta { background: #1877f2; color: white; font-size: 18px; box-shadow: 0 4px 10px rgba(24, 119, 242, 0.4); }
-    .btn-circle-meta:hover { transform: scale(1.1); background: #166fe5; }
-
-    .btn-lock { background: none; border: none; font-size: 18px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-    .btn-lock:hover { transform: scale(1.2); }
-
-    /* Dark/Light Mode Toggle */
     .theme-toggle { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 16px; transition: 0.2s; flex-shrink: 0; }
     .theme-toggle:hover { background: var(--hover-bg); }
 
-    /* Combined Box (Generator + Search) */
     .combined-box { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); transition: 0.3s; }
-    
     .generated-email-display { background: var(--bg-color); border: 2px dashed var(--border-color); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 16px; font-weight: 700; color: var(--primary); text-align: center; cursor: pointer; transition: 0.2s; margin-bottom: 12px; word-break: break-all; }
     .generated-email-display:hover { border-color: var(--primary); }
     
@@ -82,43 +63,20 @@
     .generator-controls button { padding: 10px 15px; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; white-space: nowrap; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3);}
     .generator-controls button:hover { transform: translateY(-1px); }
 
-    /* Search Box inside Combined Box */
     .search-box-container { display: flex; flex-direction: column; gap: 5px; }
     .search-box { display: flex; gap: 8px; }
     .search-input-wrapper { position: relative; flex: 1; display: flex; }
     .search-input-wrapper input { width: 100%; padding: 12px 35px 12px 16px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; outline: none; background: var(--input-bg); color: var(--text-main); transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .search-input-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1); }
-    
     .clear-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 16px; color: var(--text-muted); cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 4px; transition: 0.2s; }
     .clear-btn:hover { color: #ef4444; }
-
     .search-box button.search-action { padding: 12px 20px; background: var(--primary); color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: 0.2s; }
     .search-box button.search-action:hover { background: var(--primary-hover); }
 
-    /* Refresh Countdown */
     .refresh-status { font-size: 11px; color: var(--text-muted); font-weight: 600; text-align: right; display: flex; justify-content: flex-end; align-items: center; gap: 5px; min-height: 16px;}
     .refresh-status .spinner { width: 10px; height: 10px; border: 2px solid var(--text-muted); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Toolbar */
-    .toolbar { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-    .copy-all-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 8px 15px; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: none; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3); transition: 0.2s; }
-    .copy-all-btn:hover { transform: translateY(-1px); }
-    
-    /* Table Design (Meta Filter) */
-    .table-responsive { overflow-x: auto; background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: none; border: 1px solid var(--border-color); }
-    .mail-table { width: 100%; border-collapse: collapse; text-align: left; table-layout: fixed; }
-    .mail-table th { background: var(--bg-color); padding: 10px 12px; font-size: 12px; color: var(--text-muted); text-transform: uppercase; border-bottom: 1px solid var(--border-color); font-weight: 600; letter-spacing: 0.5px; }
-    .mail-table td { padding: 8px 12px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
-    .mail-table tr:hover { background: var(--hover-bg); }
-    
-    /* Compact Email Button */
-    .email-btn { background: var(--badge-bg); color: var(--badge-text); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer; font-size: 12px; font-weight: 500; display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: 0.2s; text-align: left; }
-    .email-btn:hover { filter: brightness(0.9); }
-    .open-btn { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.2s; }
-    .open-btn:hover { background: var(--hover-bg); }
-
-    /* Card Design (General Search) */
     .mail-list { display: flex; flex-direction: column; gap: 8px; }
     .mail-item { background: var(--card-bg); border-radius: 12px; padding: 12px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid var(--primary); display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
     .mail-item:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
@@ -129,27 +87,9 @@
     .card-footer { display: grid; grid-template-columns: 80px 1fr; gap: 8px; border-top: 1px solid var(--border-color); padding-top: 8px; align-items: stretch; }
     .app-badge { font-size: 12px; background: var(--badge-bg); padding: 6px 12px; border-radius: 6px; font-weight: 600; color: var(--badge-text); display: flex; align-items: center; justify-content: center; width: 100%; }
     
-    .code-badge { 
-      font-size: 14px; 
-      font-family: monospace; 
-      font-weight: 700; 
-      background: var(--code-bg); 
-      color: var(--code-text); 
-      padding: 6px 15px; 
-      border-radius: 6px; 
-      border: 1px solid var(--code-border); 
-      cursor: pointer; 
-      transition: 0.2s; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
+    .code-badge { font-size: 14px; font-family: monospace; font-weight: 700; background: var(--code-bg); color: var(--code-text); padding: 6px 15px; border-radius: 6px; border: 1px solid var(--code-border); cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; display: flex; justify-content: center; align-items: center; width: 100%; }
     .code-badge:hover { filter: brightness(0.9); }
     
-    /* OTP Mode Styles */
     .otp-large-display { display: none; font-size: 32px; font-weight: 800; color: var(--primary); text-align: center; letter-spacing: 3px; padding: 15px; cursor: pointer; border-radius: 8px; transition: 0.2s; }
     .otp-large-display:hover { background: var(--hover-bg); }
     .otp-large-display span { display: block; font-size: 12px; color: var(--text-muted); letter-spacing: 1px; font-weight: 600; margin-bottom: 5px; }
@@ -160,9 +100,8 @@
     body.otp-mode .otp-large-display { display: block; }
     body.otp-mode .mail-item.no-code-item { display: none; }
     
-    /* Pagination */
+    /* Pagination (Only Buttons now) */
     .pagination-container { margin-top: 20px; margin-bottom: 20px; display: none; flex-direction: column; align-items: center; gap: 10px; }
-    .pagination-info { display: flex; justify-content: space-between; width: 100%; font-size: 13px; font-weight: 600; color: var(--text-muted); padding: 0 5px; }
     .pagination-buttons { display: flex; justify-content: center; align-items: center; gap: 15px; }
     .page-btn { padding: 8px 16px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-main); transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .page-btn:hover:not(:disabled) { background: var(--hover-bg); }
@@ -172,7 +111,6 @@
     .error { color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: #fecaca; }
     .loading { text-align: center; padding: 20px; color: var(--primary); font-size: 14px; font-weight: 600; }
 
-    /* Premium Modal */
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: var(--modal-bg); backdrop-filter: blur(4px); }
     .modal-content { background-color: var(--card-bg); margin: 5% auto; padding: 20px; border-radius: 16px; width: 92%; max-width: 700px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); animation: slideDown 0.3s ease-out; }
     @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -185,35 +123,8 @@
     .modal-body { overflow-y: auto; flex: 1; font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; }
     iframe { width: 100%; height: 100%; min-height: 400px; border: none; border-radius: 8px; background: var(--bg-color); flex: 1; }
 
-    /* Premium Floating Notification (Toast) */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
-    }
-    .otp-toast {
-      background: rgba(30, 41, 59, 0.95);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      animation: slideInDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-      pointer-events: auto;
-      cursor: pointer;
-      min-width: 280px;
-      justify-content: space-between;
-    }
+    .toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+    .otp-toast { background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); color: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); display: flex; align-items: center; gap: 15px; animation: slideInDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: auto; cursor: pointer; min-width: 280px; justify-content: space-between; }
     .otp-toast:hover { background: rgba(30, 41, 59, 1); }
     .otp-toast .msg { font-size: 13px; color: #cbd5e1; font-weight: 500; }
     .otp-toast .code { font-size: 22px; font-weight: 800; color: #10b981; letter-spacing: 2px; }
@@ -223,12 +134,9 @@
   </style>
 </head>
 <body>
-  <!-- Toast Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <div class="container">
-    
-    <!-- Header Top -->
     <div class="header-top">
       <div class="header-title">
         📬 TAMIM Mailbox 
@@ -236,16 +144,10 @@
       </div>
       
       <div class="header-actions">
-        <div class="unlocked-actions" id="unlockedActions">
-          <button class="btn-circle btn-circle-private" onclick="showAllMails()" title="Private Mail">📥</button>
-          <button class="btn-circle btn-circle-meta" onclick="setFilter('meta')" title="Meta Use">∞</button>
-          <button class="btn-lock" onclick="lockUI()" title="Lock Vault">🔒</button>
-        </div>
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙</button>
       </div>
     </div>
 
-    <!-- Combined Box: Generator + Search -->
     <div class="combined-box">
       <div class="generated-email-display" id="generatedEmail" onclick="copyGeneratedEmail(this)">Click 'New Mail' to generate</div>
       
@@ -273,33 +175,12 @@
       </div>
     </div>
 
-    <div class="toolbar">
-      <button class="copy-all-btn" id="copyAllBtn" onclick="copyAllNames()">📋 Copy All Emails</button>
-    </div>
-
-    <div class="table-responsive" id="tableView">
-      <table class="mail-table">
-        <thead>
-          <tr>
-            <th style="width: 80%;">Email (Click to copy)</th>
-            <th style="width: 20%; text-align: center;">Action</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-
-    <!-- Initial Empty State -->
     <div class="mail-list" id="cardView">
       <div class="empty">📭 No email generated or searched yet.</div>
     </div>
 
-    <!-- Pagination Container with Info -->
+    <!-- Pagination (Only Buttons) -->
     <div class="pagination-container" id="pagination">
-      <div class="pagination-info">
-        <span id="totalInfo"></span>
-        <span id="pageInfo"></span>
-      </div>
       <div class="pagination-buttons">
         <button class="page-btn" id="prevBtn" onclick="changePage(-1)">« Prev</button>
         <button class="page-btn" id="nextBtn" onclick="changePage(1)">Next »</button>
@@ -318,59 +199,50 @@
   </div>
 
   <script>
-    const SECRET_KEY = "Tamimanu@2004Token+API";
-    
     let currentPage = 1;
     let itemsPerPage = 100;
-    let currentFilter = null; 
-    let allRecipients = []; 
     let isOtpMode = false;
     let refreshCountdown = 5;
     let countdownInterval = null;
     
     let knownOtps = new Set();
     let currentSearchQuery = "";
-    let isForceAll = false; // Flag for Private Mail (all mails)
 
-    // Initialize App
     window.addEventListener('DOMContentLoaded', () => {
-      // Theme Load
       const savedTheme = localStorage.getItem('theme') || 'light';
       if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.getElementById('themeBtn').textContent = '☀️';
       }
 
-      // OTP Mode Load
       if (localStorage.getItem('otpMode') === 'true') {
         isOtpMode = true;
         document.body.classList.add('otp-mode');
       }
 
-      // Check if user has unlocked VIP features
-      checkUnlockStatus();
-
-      // Load Saved Email if exists
-      const savedEmail = localStorage.getItem('savedEmail');
-      if (savedEmail) {
-        document.getElementById('generatedEmail').textContent = savedEmail;
-        document.getElementById('searchInput').value = savedEmail;
-        currentSearchQuery = savedEmail;
+      // 🔥 Search Query Persistence on Refresh
+      const savedQuery = localStorage.getItem('savedSearchQuery');
+      if (savedQuery) {
+        document.getElementById('searchInput').value = savedQuery;
+        currentSearchQuery = savedQuery;
+        
+        // If it looks like a generated email, show it in the display box
+        if (savedQuery.includes('@')) {
+            document.getElementById('generatedEmail').textContent = savedQuery;
+        }
+        
         searchMails(1);
       }
 
-      // Start Auto Refresh Countdown
       startRefreshCountdown();
     });
 
-    // Auto Refresh Countdown Logic
     function startRefreshCountdown() {
       const statusEl = document.getElementById('refreshStatus');
       
       countdownInterval = setInterval(() => {
-        // Only show countdown if there is an active search or filter
         const query = document.getElementById('searchInput').value.trim();
-        if (query === '' && currentFilter !== 'meta' && !isForceAll) {
+        if (query === '') {
           statusEl.innerHTML = '';
           return;
         }
@@ -390,43 +262,6 @@
       }, 1000);
     }
 
-    // Unlock Logic (No Timer, stays unlocked permanently until manual lock)
-    function checkUnlockStatus() {
-      const unlockTimeStr = localStorage.getItem('unlockTime');
-      const unlockedActions = document.getElementById('unlockedActions');
-      
-      if (unlockTimeStr) {
-        unlockedActions.style.display = 'flex';
-      } else {
-        unlockedActions.style.display = 'none';
-      }
-    }
-
-    // Lock UI manually
-    function lockUI() {
-      localStorage.removeItem('unlockTime');
-      checkUnlockStatus();
-      
-      // Reset UI
-      document.getElementById('searchInput').value = '';
-      localStorage.removeItem('savedEmail');
-      document.getElementById('generatedEmail').textContent = "Click 'New Mail' to generate";
-      document.getElementById('generatedEmail').style.color = 'var(--primary)';
-      document.getElementById('copyAllBtn').style.display = 'none';
-      
-      document.getElementById('cardView').innerHTML = '<div class="empty">📭 No email generated or searched yet.</div>';
-      document.getElementById('cardView').style.display = 'flex';
-      document.getElementById('tableView').style.display = 'none';
-      document.getElementById('pagination').style.display = 'none';
-      document.getElementById('refreshStatus').innerHTML = '';
-      
-      knownOtps.clear();
-      currentFilter = null;
-      isForceAll = false;
-      currentSearchQuery = "";
-    }
-
-    // Toggle Dark/Light Mode
     function toggleTheme() {
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const btn = document.getElementById('themeBtn');
@@ -441,7 +276,6 @@
       }
     }
 
-    // Toggle OTP Mode via VIP Tag
     function toggleOTPMode() {
       isOtpMode = !isOtpMode;
       if (isOtpMode) {
@@ -457,28 +291,21 @@
       }
     }
 
-    // Clear Search Box
     function clearSearch() {
       document.getElementById('searchInput').value = '';
+      localStorage.removeItem('savedSearchQuery'); // Remove from storage
       document.getElementById('searchInput').focus();
-    }
-
-    // Private Mail: Show All Mails Instantly
-    function showAllMails() {
-      document.getElementById('searchInput').value = '';
-      currentFilter = null;
-      isForceAll = true;
-      currentSearchQuery = "";
-      localStorage.removeItem('savedEmail');
-      document.getElementById('generatedEmail').textContent = "Click 'New Mail' to generate";
-      document.getElementById('generatedEmail').style.color = 'var(--primary)';
-      document.getElementById('copyAllBtn').style.display = 'none';
       
+      // Reset UI
+      document.getElementById('generatedEmail').textContent = "Click 'New Mail' to generate";
+      document.getElementById('cardView').innerHTML = '<div class="empty">📭 No email generated or searched yet.</div>';
+      document.getElementById('cardView').style.display = 'flex';
+      document.getElementById('pagination').style.display = 'none';
+      document.getElementById('refreshStatus').innerHTML = '';
       knownOtps.clear();
-      searchMails(1);
+      currentSearchQuery = "";
     }
 
-    // Generate Random Email & Auto Search
     function generateEmail() {
       const chars = 'abcdefghijklmnopqrstuvwxyz';
       let randomName = '';
@@ -493,12 +320,10 @@
       const displayEl = document.getElementById('generatedEmail');
       displayEl.textContent = fullEmail;
       
-      localStorage.setItem('savedEmail', fullEmail);
+      // 🔥 Save to localStorage
+      localStorage.setItem('savedSearchQuery', fullEmail);
 
       document.getElementById('searchInput').value = fullEmail;
-      currentFilter = null;
-      isForceAll = false;
-      document.getElementById('copyAllBtn').style.display = 'none';
       
       document.getElementById('pagination').style.display = 'flex';
       knownOtps.clear();
@@ -522,104 +347,61 @@
       });
     }
 
-    function setFilter(type) {
-      currentFilter = type;
-      currentPage = 1;
-      isForceAll = false;
-      document.getElementById('searchInput').value = ''; 
-      localStorage.removeItem('savedEmail');
-      document.getElementById('generatedEmail').textContent = "Click 'New Mail' to generate";
-      document.getElementById('copyAllBtn').style.display = 'block'; 
-      
-      document.getElementById('pagination').style.display = 'flex';
-      knownOtps.clear();
-      currentSearchQuery = "";
-      
-      searchMails(1);
-    }
-
     function searchMails(page = 1, isSilent = false) {
       currentPage = page;
       let query = document.getElementById('searchInput').value.trim();
-      
-      if (query === SECRET_KEY) {
-        localStorage.setItem('unlockTime', Date.now());
-        document.getElementById('searchInput').value = '';
-        checkUnlockStatus();
-        showAllMails();
-        return;
-      }
 
-      if (query === '' && currentFilter !== 'meta' && !isForceAll) {
+      if (query === '') {
         if (!isSilent) {
             document.getElementById('cardView').innerHTML = '<div class="empty">📭 No email generated or searched yet.</div>';
             document.getElementById('cardView').style.display = 'flex';
-            document.getElementById('tableView').style.display = 'none';
             document.getElementById('pagination').style.display = 'none';
             document.getElementById('refreshStatus').innerHTML = '';
         }
         return;
       }
 
-      if (query !== '') {
-        currentFilter = null;
-        isForceAll = false;
-        document.getElementById('copyAllBtn').style.display = 'none';
+      // 🔥 Save manual search query
+      if (!isSilent) {
+          localStorage.setItem('savedSearchQuery', query);
       }
 
-      // Detect if context changed
       if (query !== currentSearchQuery && !isSilent) {
           knownOtps.clear();
           currentSearchQuery = query;
       }
 
       const listElCard = document.getElementById('cardView');
-      const listElTable = document.getElementById('tableBody');
       const start = (currentPage - 1) * itemsPerPage;
 
       if (!isSilent) {
-        // Show loading immediately
         listElCard.innerHTML = '<div class="loading">⏳ Loading emails...</div>';
         listElCard.style.display = 'flex';
-        listElTable.innerHTML = '';
-        document.getElementById('tableView').style.display = 'none';
         document.getElementById('pagination').style.display = 'flex';
       }
 
-      let endpoint = `/api/search?limit=${itemsPerPage}&start=${start}`;
-      if (currentFilter === 'meta') endpoint += `&q=${encodeURIComponent('from:notification@email.meta.com')}`;
-      else if (query) endpoint += `&q=${encodeURIComponent(query)}`;
-      // If isForceAll, we don't append any query, it fetches all messages
+      let endpoint = `/api/search?limit=${itemsPerPage}&start=${start}&q=${encodeURIComponent(query)}`;
 
       fetch(endpoint)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-          return res.json();
-        })
+        .then(res => res.json())
         .then(data => {
-          const messages = data.messages || data.Messages || [];
-          const total = data.total ?? data.Total ?? 0;
+          const messages = data.messages || [];
+          const total = data.total ?? 0;
 
-          // 🔥 Check for NEW OTPs (Only for actual searches, not Meta or Private Mail)
           let newOtps = [];
-          if (query !== '' && currentFilter !== 'meta' && !isForceAll) {
-              messages.forEach(msg => {
-                  let code = msg.ExtractedCode;
-                  if (code) {
-                      const uniqueHash = `${msg.ID}-${code}`;
-                      if (!knownOtps.has(uniqueHash)) {
-                          knownOtps.add(uniqueHash);
-                          if (isSilent) {
-                              newOtps.push(code);
-                          }
-                      }
+          messages.forEach(msg => {
+              let code = msg.ExtractedCode;
+              if (code) {
+                  const uniqueHash = `${msg.ID}-${code}`;
+                  if (!knownOtps.has(uniqueHash)) {
+                      knownOtps.add(uniqueHash);
+                      if (isSilent) newOtps.push(code);
                   }
-              });
-          }
+              }
+          });
 
           if (isSilent && newOtps.length > 0) {
-              const latestOtp = newOtps[0];
-              triggerOtpNotification(latestOtp);
+              triggerOtpNotification(newOtps[0]);
           }
 
           if (messages.length === 0) {
@@ -631,78 +413,43 @@
             return;
           }
 
-          if (currentFilter === 'meta') {
-            document.getElementById('tableView').style.display = 'block';
-            listElTable.innerHTML = '';
-            const uniqueRecipients = new Set();
-            allRecipients = []; 
-
-            messages.forEach(msg => {
-              let recipient = 'Unknown';
-              if (msg.To && msg.To.length > 0) recipient = msg.To[0].Address;
-              
-              if (uniqueRecipients.has(recipient)) return;
-              uniqueRecipients.add(recipient);
-              allRecipients.push(recipient);
-
-              const msgId = msg.ID || msg.id;
-
-              const tr = document.createElement('tr');
-              tr.innerHTML = `
-                <td>
-                  <div class="email-btn" onclick="copyText('${escapeHtml(recipient)}', this)" title="${escapeHtml(recipient)}">
-                    ${escapeHtml(recipient)}
-                  </div>
-                </td>
-                <td style="text-align: center;">
-                  <button class="open-btn" onclick="openMail('${msgId}')">Open</button>
-                </td>
-              `;
-              listElTable.appendChild(tr);
-            });
-
-          } else {
-            listElCard.style.display = 'flex';
-            listElCard.innerHTML = ''; 
+          listElCard.style.display = 'flex';
+          listElCard.innerHTML = ''; 
+          
+          messages.forEach(msg => {
+            const div = document.createElement('div');
+            div.className = 'mail-item';
             
-            messages.forEach(msg => {
-              const div = document.createElement('div');
-              div.className = 'mail-item';
-              
-              const subject = msg.Subject || msg.subject || '(No Subject)';
-              const from = msg.From?.Address || msg.from?.Address || 'Unknown';
-              const to = msg.To?.[0]?.Address || 'Unknown Recipient';
-              const msgId = msg.ID || msg.id; 
+            const subject = msg.Subject || '(No Subject)';
+            const from = msg.From?.Address || 'Unknown';
+            const to = msg.To?.[0]?.Address || 'Unknown Recipient';
+            const msgId = msg.ID || msg.id; 
 
-              let appName = 'Other';
-              if (from.includes('meta.com')) appName = 'Meta ∞';
-              if (from.includes('instagram.com')) appName = 'Instagram'; 
-              
-              let code = msg.ExtractedCode;
-              
-              if (isOtpMode && !code) {
-                  div.classList.add('no-code-item');
-              }
+            let appName = 'Other';
+            if (from.includes('meta.com')) appName = 'Meta ∞';
+            if (from.includes('instagram.com')) appName = 'Instagram'; 
+            
+            let code = msg.ExtractedCode;
+            if (isOtpMode && !code) div.classList.add('no-code-item');
 
-              div.innerHTML = `
-                <div onclick="openMail('${msgId}')">
-                  <div class="mail-subject" title="${escapeHtml(subject)}">${escapeHtml(subject)}</div>
-                  <div class="mail-to">📩 To: ${escapeHtml(to)}</div>
-                </div>
-                
-                <div class="otp-large-display" onclick="copyExtractedOtp(event, '${code}')">
-                  <span>EXTRACTED OTP (Click to copy)</span>
-                  ${code || 'XXXXXX'}
-                </div>
+            div.innerHTML = `
+              <div onclick="openMail('${msgId}')">
+                <div class="mail-subject" title="${escapeHtml(subject)}">${escapeHtml(subject)}</div>
+                <div class="mail-to">📩 To: ${escapeHtml(to)}</div>
+              </div>
+              
+              <div class="otp-large-display" onclick="copyExtractedOtp(event, '${code}')">
+                <span>EXTRACTED OTP (Click to copy)</span>
+                ${code || 'XXXXXX'}
+              </div>
 
-                <div class="card-footer">
-                  <span class="app-badge">${appName}</span>
-                  ${code ? `<span class="code-badge" onclick="event.stopPropagation(); copyText('${code}', this)">📋 ${code}</span>` : `<span class="code-badge" style="background:var(--badge-bg); color:var(--text-muted); border-color:var(--border-color);">No Code</span>`}
-                </div>
-              `;
-              listElCard.appendChild(div);
-            });
-          }
+              <div class="card-footer">
+                <span class="app-badge">${appName}</span>
+                ${code ? `<span class="code-badge" onclick="event.stopPropagation(); copyText('${code}', this)">📋 ${code}</span>` : `<span class="code-badge" style="background:var(--badge-bg); color:var(--text-muted); border-color:var(--border-color);">No Code</span>`}
+              </div>
+            `;
+            listElCard.appendChild(div);
+          });
 
           updatePagination(total);
         })
@@ -715,42 +462,28 @@
         });
     }
 
-    // Trigger Floating Notification & Auto Copy
     function triggerOtpNotification(otp) {
-        navigator.clipboard.writeText(otp).catch(err => console.log('Auto copy blocked by browser', err));
-
+        navigator.clipboard.writeText(otp).catch(err => console.log('Auto copy blocked', err));
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
         toast.className = 'otp-toast';
-        
-        toast.innerHTML = `
-            <div>
-                <div class="msg">New OTP Detected</div>
-                <div class="code">${otp}</div>
-            </div>
-            <div class="copied-badge">Copied!</div>
-        `;
-
+        toast.innerHTML = `<div><div class="msg">New OTP Detected</div><div class="code">${otp}</div></div><div class="copied-badge">Copied!</div>`;
         toast.onclick = () => {
             navigator.clipboard.writeText(otp).then(() => {
                 toast.querySelector('.copied-badge').innerText = 'Copied Again!';
                 setTimeout(() => toast.querySelector('.copied-badge').innerText = 'Copied!', 1000);
             });
         };
-
         container.appendChild(toast);
-
         setTimeout(() => {
             toast.style.animation = 'fadeOutUp 0.3s ease-in forwards';
             setTimeout(() => toast.remove(), 300);
         }, 4000);
     }
 
-    // Auto Copy from OTP Mode Display
     function copyExtractedOtp(event, code) {
         if (!code || code === 'XXXXXX' || code === 'null') return;
         event.stopPropagation();
-        
         navigator.clipboard.writeText(code).then(() => {
             const el = event.currentTarget;
             const originalHTML = el.innerHTML;
@@ -761,16 +494,13 @@
 
     function copyText(text, btn) {
       if (text === 'No Code' || text === 'Unknown' || text === '') return;
-      
       let cleanText = text.replace('📋 ', '').replace('✅ Copied', '').trim();
-      
       navigator.clipboard.writeText(cleanText).then(() => {
         const originalHTML = btn.innerHTML;
         btn.innerHTML = '✅ Copied';
         btn.style.backgroundColor = '#d1fae5'; 
         btn.style.color = '#059669';
         btn.style.borderColor = '#10b981';
-        
         setTimeout(() => { 
           btn.innerHTML = originalHTML; 
           btn.style.backgroundColor = ''; 
@@ -780,36 +510,23 @@
       });
     }
 
-    function copyAllNames() {
-      if (allRecipients.length === 0) return;
-      const textToCopy = allRecipients.join('\n');
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        const btn = document.getElementById('copyAllBtn');
-        btn.textContent = '✅ Copied!';
-        setTimeout(() => { btn.textContent = '📋 Copy All Emails'; }, 2000);
-      });
-    }
-
     function changePage(direction) {
       currentPage += direction;
       searchMails(currentPage);
       window.scrollTo(0, 0); 
     }
 
+    // 🔥 Removed Total and Page text from here
     function updatePagination(total) {
       const totalPages = Math.ceil(total / itemsPerPage) || 1;
       document.getElementById('prevBtn').disabled = currentPage <= 1;
       document.getElementById('nextBtn').disabled = currentPage >= totalPages;
-      
-      document.getElementById('totalInfo').textContent = `Total ${total} messages`;
-      document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
     }
 
     function openMail(id) {
       const modal = document.getElementById('mailModal');
       const modalSubject = document.getElementById('modalSubject');
       const modalBody = document.getElementById('modalEmailBody');
-
       modal.style.display = 'block';
       modalSubject.textContent = '⏳ Loading...';
       modalBody.innerHTML = '<div class="loading" style="padding: 40px;">⏳ Email loading...</div>';
@@ -818,14 +535,11 @@
         .then(res => res.json())
         .then(msg => {
           modalSubject.textContent = msg.Subject || '(No Subject)';
-          
           if (msg.HTML) {
             modalBody.innerHTML = `<iframe id="emailFrame"></iframe>`;
             const frame = document.getElementById('emailFrame');
             const doc = frame.contentWindow.document;
-            doc.open();
-            doc.write(msg.HTML);
-            doc.close();
+            doc.open(); doc.write(msg.HTML); doc.close();
           } else if (msg.Text) {
             modalBody.innerHTML = `<pre style="white-space: pre-wrap; font-family: inherit; padding: 10px;">${escapeHtml(msg.Text)}</pre>`;
           } else {
@@ -838,14 +552,8 @@
         });
     }
 
-    function closeModal() {
-      document.getElementById('mailModal').style.display = 'none';
-    }
-
-    function handleKeyPress(event) {
-      if (event.key === 'Enter') searchMails(1);
-    }
-
+    function closeModal() { document.getElementById('mailModal').style.display = 'none'; }
+    function handleKeyPress(event) { if (event.key === 'Enter') searchMails(1); }
     function escapeHtml(str) {
       if (!str) return '';
       const div = document.createElement('div');
